@@ -1,0 +1,4 @@
+Sample data for TOME2NRTM, taken from the German Nationals 2017
+
+tome-DM-2017.txt  - raw, unedited file exported from TOME. Note that this file is encoded as ISO-8859-1!
+tome-DM-2017.json - prettyprinted JSON version of the same file: separator stripped off, converted to UTF-8, and piped thru json_pp
