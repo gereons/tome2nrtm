@@ -1,5 +1,5 @@
 language: swift
 os: osx
 osx_image: xcode9
-xcode_project: tome2nrtm.xcodeproj
-xcode_scheme: tome2nrtm
+script:
+    - swift build
