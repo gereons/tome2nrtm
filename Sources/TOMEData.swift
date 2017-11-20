@@ -112,7 +112,7 @@ extension TOME {
     
     class Match: Decodable {
         let pk: Int
-        let tournamentPk: Int
+        let tournamentPk: Int?
         let round: Int
         let orderIndex: Int     // table number
         
@@ -126,9 +126,9 @@ extension TOME {
     
     class MatchParticipant: Decodable {
         let pk: Int
-        let participantPk: Int
+        let participantPk: Int?
         let matchPk: Int
-        let pointsEarned: Int
+        let pointsEarned: Int?
         let tableSeat: Int      // 0 or 1
         
         enum CodingKeys: String, CodingKey {
@@ -158,10 +158,10 @@ extension TOME.Participant {
                 let p2 = matchParticipants[1]
                 
                 if self.pk == p1.participantPk {
-                    pointsEarned += p1.pointsEarned
+                    pointsEarned += p1.pointsEarned!
                     matchesPlayed += 1
                 } else if self.pk == p2.participantPk {
-                    pointsEarned += p2.pointsEarned
+                    pointsEarned += p2.pointsEarned!
                     matchesPlayed += 1
                 }
             } else {
@@ -192,10 +192,10 @@ extension TOME.Participant {
                 let p2 = matchParticipants[1]
                 
                 if self.pk == p1.participantPk {
-                    sumOfAverageScores += tournament.participant(for: p2.participantPk)!.averageScore
+                    sumOfAverageScores += tournament.participant(for: p2.participantPk!)!.averageScore
                     opponents += 1
                 } else if self.pk == p2.participantPk {
-                    sumOfAverageScores += tournament.participant(for: p1.participantPk)!.averageScore
+                    sumOfAverageScores += tournament.participant(for: p1.participantPk!)!.averageScore
                     opponents += 1
                 }
             }
@@ -220,10 +220,10 @@ extension TOME.Participant {
                 let p2 = matchParticipants[1]
                 
                 if self.pk == p1.participantPk {
-                    sumOfSoS += tournament.participant(for: p2.participantPk)!.strengthOfSchedule
+                    sumOfSoS += tournament.participant(for: p2.participantPk!)!.strengthOfSchedule
                     opponents += 1
                 } else if self.pk == p2.participantPk {
-                    sumOfSoS += tournament.participant(for: p1.participantPk)!.strengthOfSchedule
+                    sumOfSoS += tournament.participant(for: p1.participantPk!)!.strengthOfSchedule
                     opponents += 1
                 }
             }
@@ -267,16 +267,16 @@ extension TOME.Tournament {
         
         self.enumerateMatches { matchParticipants in
             if matchParticipants.count == 1 {
-                let player1 = self.participant(for: matchParticipants[0].participantPk)
+                let player1 = self.participant(for: matchParticipants[0].participantPk!)
                 player1?.score += 6
             } else {
                 assert(matchParticipants.count == 2)
                 
-                let player1 = self.participant(for: matchParticipants[0].participantPk)
-                let player2 = self.participant(for: matchParticipants[1].participantPk)
+                let player1 = self.participant(for: matchParticipants[0].participantPk!)
+                let player2 = self.participant(for: matchParticipants[1].participantPk!)
                 
-                player1?.score += matchParticipants[0].pointsEarned
-                player2?.score += matchParticipants[1].pointsEarned
+                player1?.score += matchParticipants[0].pointsEarned!
+                player2?.score += matchParticipants[1].pointsEarned!
             }
         }
         
@@ -334,8 +334,8 @@ extension TOME.Tournament {
             print("  Matches: \(matches.count)")
             for match in matches {
                 let opponents = self.matchParticipants.filter { $0.matchPk == match.pk }
-                let opp = opponents.flatMap { self.participant(for: $0.participantPk)?.name }.joined(separator: " vs ")
-                let result = opponents.map { String($0.pointsEarned) }.joined(separator: ":")
+                let opp = opponents.flatMap { self.participant(for: $0.participantPk!)?.name }.joined(separator: " vs ")
+                let result = opponents.map { String($0.pointsEarned!) }.joined(separator: ":")
                 if match.orderIndex == -1 {
                     assert(opponents.count == 1)
                     print("  Bye: \(opp)")

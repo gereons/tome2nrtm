@@ -43,13 +43,15 @@ struct TOME: Decodable {
         self.tournaments = try tournamentEntities.decode([TOME.Tournament].self, forKey: .entities)
         
         let matchEntities = try entitiesMap.nestedContainer(keyedBy: EntitiesKey.self, forKey: .matches)
-        self.matches = try matchEntities.decode([TOME.Match].self, forKey: .entities)
+        let matches = try matchEntities.decode([TOME.Match].self, forKey: .entities)
+        self.matches = matches.filter { $0.tournamentPk != nil }
         
         let participantEntities = try entitiesMap.nestedContainer(keyedBy: EntitiesKey.self, forKey: .participants)
         self.participants = try participantEntities.decode([TOME.Participant].self, forKey: .entities)
         
         let matchParticipantEntities = try entitiesMap.nestedContainer(keyedBy: EntitiesKey.self, forKey: .matchParticipants)
-        self.matchParticipants = try matchParticipantEntities.decode([TOME.MatchParticipant].self, forKey: .entities)
+        let participants = try matchParticipantEntities.decode([TOME.MatchParticipant].self, forKey: .entities)
+        self.matchParticipants = participants.filter { $0.participantPk != nil && $0.pointsEarned != nil }
         
         self.metadataVersion = try container.decode(String.self, forKey: .metadataVersion)
     }

@@ -150,11 +150,11 @@ extension NRTM.Tournament {
                     let player1 = matchParticipants[0]
                     let player2 = matchParticipants[1]
                     
-                    let (r1, c1) = splitScore(player1.pointsEarned)
-                    let p1result = NRTM.SwissResult(id: player1.participantPk, runnerScore: r1, corpScore: c1)
+                    let (r1, c1) = splitScore(player1.pointsEarned!)
+                    let p1result = NRTM.SwissResult(id: player1.participantPk!, runnerScore: r1, corpScore: c1)
                     
-                    let (r2, c2) = splitScore(player2.pointsEarned)
-                    let p2result = NRTM.SwissResult(id: player2.participantPk, runnerScore: r2, corpScore: c2)
+                    let (r2, c2) = splitScore(player2.pointsEarned!)
+                    let p2result = NRTM.SwissResult(id: player2.participantPk!, runnerScore: r2, corpScore: c2)
                     
                     assert(r1+c1+r2+c2 < 7)
                     let game = NRTM.Game(table: match.orderIndex + 1, player1: p1result, player2: p2result)
@@ -196,8 +196,8 @@ extension NRTM.Tournament {
                     let player1 = matchParticipants[0]
                     let player2 = matchParticipants[1]
                     
-                    let p1name = elims.participant(for: player1.participantPk)?.name ?? "n/a"
-                    let p2name = elims.participant(for: player2.participantPk)?.name ?? "n/a"
+                    let p1name = elims.participant(for: player1.participantPk!)?.name ?? "n/a"
+                    let p2name = elims.participant(for: player2.participantPk!)?.name ?? "n/a"
                     
                     let p1 = self.lookupPlayer(p1name, in: swissParticipants)
                     let p2 = self.lookupPlayer(p2name, in: swissParticipants)
