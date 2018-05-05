@@ -1,4 +1,4 @@
-# TOME2NRTM
+# TOME2NRTM ![Build status](https://travis-ci.org/gereons/tome2nrtm.svg?branch=master)
 
 TOME2NRTM is a converter from TOME export files to NRTM json files, so that you can upload them to ABR.
 
