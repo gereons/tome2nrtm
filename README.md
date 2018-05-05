@@ -16,7 +16,7 @@ TOME, unfortunately, lacks such a feature. This is where TOME2NRTM comes in: you
 
 ## Building and running
 
-TOME2NRTM is written in Swift 4, this means you can run it either on a Mac (free download of Apple's development platform, Xcode 9, is required), or on any Linux system that has either [Docker](https://docker.io) or the [current snapshot](https://swift.org/download/#snapshots) of the Swift tools for Linux installed.
+TOME2NRTM is written in Swift 4.1, this means you can run it either on a Mac (free download of Apple's development platform, Xcode 9.3 (or newer) is required), or on any Linux system that has either [Docker](https://docker.io) or the [current snapshot](https://swift.org/download/#snapshots) of the Swift tools for Linux installed.
 
 ### on a Mac
 

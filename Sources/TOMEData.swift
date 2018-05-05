@@ -334,7 +334,7 @@ extension TOME.Tournament {
             print("  Matches: \(matches.count)")
             for match in matches {
                 let opponents = self.matchParticipants.filter { $0.matchPk == match.pk }
-                let opp = opponents.flatMap { self.participant(for: $0.participantPk!)?.name }.joined(separator: " vs ")
+                let opp = opponents.compactMap { self.participant(for: $0.participantPk!)?.name }.joined(separator: " vs ")
                 let result = opponents.map { String($0.pointsEarned!) }.joined(separator: ":")
                 if match.orderIndex == -1 {
                     assert(opponents.count == 1)
